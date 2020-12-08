@@ -8,7 +8,7 @@ from mtgsdk import Card, Set
 from pymongo import MongoClient
 
 parser = argparse.ArgumentParser(description="Update app's MetaSyn database with latest data from MTGJSON.com. Default collection to update is AllCards")
-parser.add_argument('-c', '--collection', type=str, choices=['cards', 'keywords', 'sets', 'formats'], default="cards", help="collection to update")
+parser.add_argument('-c', '--collection', type=str, choices=['cards', 'types', 'keywords', 'sets', 'formats'], default="cards", help="collection to update")
 args = parser.parse_args()
 
 # MongoDB config access file
@@ -27,16 +27,53 @@ def get_data(url, save_path, chunk_size=128):
 # db options include: "RawDataDB" and "MetaSynDB"
 def update_db(collection_name):
     switch = {
-        "keywords": handle_keywords_update
+        "keywords": handle_keywords_update,
+        "types": handle_types_update
     }
     update = switch.get(collection_name, lambda:"Invalid collection specified")
     update()
 
-def handle_cards_update():
-    # Get latest cards
-    get_data("https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip", "./server/flaskr/data/allPrintingsCSV.zip")
-    
+# TODO: create function to retrieve and update AllCards collection in DB
+# def handle_cards_update():
+#     # Get latest cards
+#     get_data("https://mtgjson.com/api/v5/AllPrintings.json.zip", "./server/flaskr/data/allPrintings.json.zip")
 
+def handle_types_update():
+    # Get latest card types
+    raw_data = requests.get('https://mtgjson.com/api/v5/CardTypes.json').json()
+    updated_types = []
+    for data in raw_data['data']:
+        updated_types.append(data)
+    updated_types.sort()
+    print(updated_types)
+    with open('./data/types.yaml', 'w') as f:
+        f.write(str(updated_types)) 
+    # Poll MongoDB for current 'types' collection
+    try:
+        client = MongoClient("mongodb+srv://%s:%s@metasyndb.pat24.mongodb.net/admin?retryWrites=true&w=majority" % (config["username"], config["pw"]))
+    except ConnectionError:
+        print("Unable to connect to DB")
+        return
+    db = client['MetaSynDB']
+    collection = db['types']
+    # Compare most recent list of types with DB Collection
+    # Insert any new types that are not already in the DB Collection
+    # TODO: add function to run synergy calculator on new types BEFORE they're inserted into database
+    update_count = 0
+    for card_type in updated_types:
+        if collection.find({"type": card_type}).count() == 0:
+            new_card_type = dict(type=card_type)
+            print(new_card_type)
+            new_id = collection.insert_one(new_card_type).inserted_id
+            update_count += 1
+            print("Added new card_type to DB (" + str(new_id) + "): " + card_type)    
+    if update_count == 0:
+        print("### No updates to card_types DB Collection needed")
+        return
+    else:
+        print("### Number of new types added to DB: " + str(update_count))
+        return
+    
 def handle_keywords_update():
     # Get latest keywords
     raw_data = requests.get('https://mtgjson.com/api/v5/Keywords.json').json()

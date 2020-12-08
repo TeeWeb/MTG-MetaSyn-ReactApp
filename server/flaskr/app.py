@@ -100,6 +100,23 @@ def create_app(test_config=None):
     def api():
         return {"data": 1234}
 
+    @app.route('/api/sets', methods=['GET'])
+    def sets():
+        sets_cursor = db.sets.find({}, {"_id": 0, "code": 1})
+        sets = []
+        for set in list(sets_cursor):
+            sets.append(set['code'])
+        return jsonify(sets)
+
+    @app.route('/api/keywords', methods=['GET'])
+    def keywords():
+        keywords_cursor = db.keywords.find({}, {"_id": 0, "keyword": 1}).sort("keyword")
+        keywords = []
+        for keyword in list(keywords_cursor):
+            keywords.append(keyword['keyword'])
+        return jsonify(keywords)
+
+
     @app.route('/api/synergize', methods=['POST'])
     def synergize():
         selected_card = request.args.get('card')

@@ -11,11 +11,8 @@ const SearchParams = ({ requestCards }) => {
   const [colorOperator, setColorOperator] = useState("And/Or");
   const [allCardTypes, setAllCardTypes] = useState([]);
   const [allCardSets, setAllCardSets] = useState([]);
+  const [allKeywords, setAllKeywords] = useState([])
   const [cardSet, setCardSet] = useState("");
-
-  const abilityWords = KEYWORDS.abilityWords;
-  const keywordAbilities = KEYWORDS.keywordAbilities;
-  const allKeywords = abilityWords.concat(keywordAbilities).sort();
 
   const getAllTypes = () => {
     const types = TYPES.sort()
@@ -24,21 +21,37 @@ const SearchParams = ({ requestCards }) => {
   };
 
   const getAllSets = () => {
-    fetch("https://api.magicthegathering.io/v1/sets").then((res) => {
+    fetch("http://localhost:5000/api/sets").then((res) => {
       const sets = res.json().then((data) => {
-        const setsData = data.sets;
+        const setsData = data;
         let setsArray = [];
         setsData.forEach((set) => {
-          setsArray.push(set.code);
+          setsArray.push(set);
         });
         setAllCardSets(setsArray);
         return setsArray;
       });
       return sets;
-    });
+    })
+  };
+
+  const getAllKeywords = () => {
+    fetch("http://localhost:5000/api/keywords").then((res) => {
+      const keywords = res.json().then((data) => {
+        const keywordsData = data;
+        let keywordsArray = [];
+        keywordsData.forEach((keyword) => {
+          keywordsArray.push(keyword);
+        });
+        setAllKeywords(keywordsArray);
+        return keywordsArray;
+      });
+      return keywords;
+    })
   };
 
   useEffect(() => {
+    getAllKeywords();
     getAllTypes();
     getAllSets();
     setActiveColors([]);

@@ -3,8 +3,19 @@ import requests
 from yaml import load, Loader
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from pymongo import MongoClient
+
+from mtgsdk import Card
 
 from flaskr.synergyCalc import CalculatedSynergy
+
+with open('./config.yaml', 'r') as f:
+    config = dict(load(f, Loader=Loader))
+    print(config["username"])
+
+client = MongoClient("mongodb+srv://%s:%s@metasyndb.pat24.mongodb.net/admin?retryWrites=true&w=majority" % (config["username"], config["pw"]))
+db = client["MetaSynDB"]
+all_cards = db.AllCards
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)

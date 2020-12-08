@@ -13,7 +13,7 @@ with open('./config.yaml', 'r') as f:
     config = dict(load(f, Loader=Loader))
     print(config["username"])
 
-client = MongoClient("mongodb+srv://%s:%s@metasyndb.pat24.mongodb.net/admin?retryWrites=true&w=majority" % (config["username"], config["pw"]))
+client = MongoClient("mongodb+srv://%s:%s@%s?retryWrites=true&w=majority" % (config["username"], config["pw"], config["mongodb_uri"]))
 db = client["MetaSynDB"]
 all_cards = db.AllCards
 
@@ -115,7 +115,6 @@ def create_app(test_config=None):
         for keyword in list(keywords_cursor):
             keywords.append(keyword['keyword'])
         return jsonify(keywords)
-
 
     @app.route('/api/synergize', methods=['POST'])
     def synergize():

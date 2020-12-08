@@ -50,7 +50,7 @@ def handle_types_update():
         f.write(str(updated_types)) 
     # Poll MongoDB for current 'types' collection
     try:
-        client = MongoClient("mongodb+srv://%s:%s@metasyndb.pat24.mongodb.net/admin?retryWrites=true&w=majority" % (config["username"], config["pw"]))
+        client = MongoClient("mongodb+srv://%s:%s@%s?retryWrites=true&w=majority" % (config["username"], config["pw"], config["mongodb_uri"]))
     except ConnectionError:
         print("Unable to connect to DB")
         return
@@ -91,7 +91,7 @@ def handle_keywords_update():
         f.write(str(sorted_keywords)) 
     # Poll MongoDB for current 'keywords' collection
     try:
-        client = MongoClient("mongodb+srv://%s:%s@metasyndb.pat24.mongodb.net/admin?retryWrites=true&w=majority" % (config["username"], config["pw"]))
+        client = MongoClient("mongodb+srv://%s:%s@%s?retryWrites=true&w=majority" % (config["username"], config["pw"], config["mongodb_uri"]))
     except ConnectionError:
         print("Unable to connect to DB")
         return

@@ -2,7 +2,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import { render } from "react-dom";
 import { Canvas, extend } from "react-three-fiber";
 import * as THREE from "three";
-import mtg, { card } from "mtgsdk";
+import mtg from "mtgsdk";
 
 import Controls from "./Components/Controls";
 import Plane from "./Components/Plane";
@@ -28,14 +28,17 @@ const App = () => {
     colorOperator,
     cardSet,
     keyword,
-    type
+    type,
+    subtype
   ) {
-    console.log("Requesting Cards: ", cardSet, type);
+    console.log("Requesting Cards: ", activeColors, cardSet, keyword, type, subtype);
     const filteredCards = [];
     const cardData = await mtg.card
       .where({
         set: cardSet,
-        type: type,
+        text: keyword,
+        types: type,
+        subtypes: subtype
       })
       .then((res) => {
         return res;
@@ -53,7 +56,6 @@ const App = () => {
         filteredCards.push(card);
       }
     });
-
     setCards(filteredCards);
   }
 

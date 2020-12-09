@@ -116,6 +116,21 @@ def create_app(test_config=None):
             keywords.append(keyword['keyword'])
         return jsonify(keywords)
 
+    @app.route('/api/types', methods=['GET'])
+    def types():
+        card_types_cursor = list(db.types.find({}, {"_id": 0, "type": 1}).sort("type"))
+        card_types = []
+        for card_type in card_types_cursor:
+            card_types.append(card_type['type'])
+        return jsonify(card_types)
+
+    @app.route('/api/subtypes', methods=['GET'])
+    def subtypes():
+        selected_type = request.args.get('type')
+        subtypes_dict = db.types.find({"type": selected_type}, {"_id": 0, "subtypes": 1}).sort("subtypes").next()
+        subtypes = subtypes_dict['subtypes']
+        return jsonify(subtypes)
+
     @app.route('/api/synergize', methods=['POST'])
     def synergize():
         selected_card = request.args.get('card')

@@ -6,18 +6,44 @@ import "./SearchParams.css";
 
 const SearchParams = ({ requestCards }) => {
   const [keyword, setKeyword] = useState("");
-  const [type, setType] = useState("");
+  const [cardType, setCardType] = useState("");
+  const [subtype, setSubtype] = useState("")
   const [activeColors, setActiveColors] = useState([]);
   const [colorOperator, setColorOperator] = useState("And/Or");
   const [allCardTypes, setAllCardTypes] = useState([]);
+  const [subtypes, setSubtypes] = useState([]);
   const [allCardSets, setAllCardSets] = useState([]);
   const [allKeywords, setAllKeywords] = useState([])
   const [cardSet, setCardSet] = useState("");
 
-  const getAllTypes = () => {
-    const types = TYPES.sort()
-    setAllCardTypes(types)
-    return types;
+  const getAllCardTypes = () => {
+    fetch("http://localhost:5000/api/types").then((res) => {
+      const types = res.json().then((data) => {
+        const typesData = data;
+        let typesArray = [];
+        typesData.forEach((cardTypes) => {
+          typesArray.push(cardTypes);
+        });
+        setAllCardTypes(typesArray);
+        return typesArray;
+      });
+      return types;
+    })
+  };
+
+  const getAllSubtypes = (cardType) => {
+    fetch("http://localhost:5000/api/subtypes?type=" + cardType).then((res) => {
+      const subtypes = res.json().then((data) => {
+        const subtypesData = data;
+        let subtypesArray = [];
+        subtypesData.forEach((cardSubtypes) => {
+          subtypesArray.push(cardSubtypes);
+        });
+        setSubtypes(subtypesArray);
+        return subtypesArray;
+      });
+      return subtypes;
+    })
   };
 
   const getAllSets = () => {
@@ -50,9 +76,15 @@ const SearchParams = ({ requestCards }) => {
     })
   };
 
+  // Use main "Type" selection to determine list of subtypes
+  const handleSetCardType = (selection) => {
+    setCardType(selection)
+    getAllSubtypes(selection)
+  }
+
   useEffect(() => {
     getAllKeywords();
-    getAllTypes();
+    getAllCardTypes();
     getAllSets();
     setActiveColors([]);
   }, [setActiveColors]);
@@ -62,7 +94,7 @@ const SearchParams = ({ requestCards }) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          requestCards(activeColors, colorOperator, cardSet, keyword, type);
+          requestCards(activeColors, colorOperator, cardSet, keyword, cardType, subtype);
         }}
       >
         <div className="search-params-colors">
@@ -187,13 +219,34 @@ const SearchParams = ({ requestCards }) => {
                 className="search-param-type"
                 id="search-type"
                 name="type"
-                onChange={(e) => setType(e.target.value)}
-                onBlur={(e) => setType(e.target.value)}
+                onChange={(e) => handleSetCardType(e.target.value)}
+                onBlur={(e) => handleSetCardType(e.target.value)}
               >
                 <option></option>
                 {allCardTypes.map((type) => (
                   <option key={type} value={type}>
                     {type}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div className="search-params-subtypes">
+            <label htmlFor="search-subtype" className="search-param">
+              Subtype
+              <select
+                className="search-param-subtype"
+                id="search-subtype"
+                name="subtype"
+                onChange={(e) => {
+                  setSubtype(e.target.value)
+                }}
+                onBlur={(e) => setSubtype(e.target.value)}
+              >
+                <option></option>
+                {subtypes.map((subtype) => (
+                  <option key={subtype} value={subtype}>
+                    {subtype}
                   </option>
                 ))}
               </select>

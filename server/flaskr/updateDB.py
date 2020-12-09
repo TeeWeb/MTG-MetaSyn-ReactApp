@@ -1,3 +1,5 @@
+### Tools for polling card data sources and updating the MongoDB as needed 
+
 import requests
 import zipfile
 from yaml import load, Loader
@@ -41,11 +43,12 @@ def update_db(collection_name):
 def handle_types_update():
     # Get latest card types
     raw_data = requests.get('https://mtgjson.com/api/v5/CardTypes.json').json()
-    updated_types = []
-    for data in raw_data['data']:
-        updated_types.append(data)
-    updated_types.sort()
-    print(updated_types)
+    updated_types = {}
+    for card_type in raw_data['data']:
+        subtypes = []
+        for subtype in raw_data['data'][card_type]['subTypes']:
+            subtypes.append(subtype)
+        updated_types[card_type] = subtypes
     with open('./data/types.yaml', 'w') as f:
         f.write(str(updated_types)) 
     # Poll MongoDB for current 'types' collection
@@ -60,13 +63,26 @@ def handle_types_update():
     # Insert any new types that are not already in the DB Collection
     # TODO: add function to run synergy calculator on new types BEFORE they're inserted into database
     update_count = 0
+    print("## Checking for new Card Types and subtypes")
     for card_type in updated_types:
+        
         if collection.find({"type": card_type}).count() == 0:
-            new_card_type = dict(type=card_type)
+            new_card_type = dict(type=card_type, subtypes=updated_types[card_type])
             print(new_card_type)
             new_id = collection.insert_one(new_card_type).inserted_id
             update_count += 1
-            print("Added new card_type to DB (" + str(new_id) + "): " + card_type)    
+            print("Added new card_type to DB (" + str(new_id) + "): " + card_type) 
+        elif collection.find({"type": card_type}).count() == 1:
+            for subtype in updated_types[card_type]:
+                if collection.find({"type": card_type, "subtypes": subtype}).count() == 0:
+                    print("## FOUND NEW SUBTYPE: " + card_type + "-" + subtype)  
+                    current_subtypes = collection.find({"type": card_type}, {"_id": 0, "subtypes": 1}).next()['subtypes']
+                    current_subtypes.append(subtype)
+                    current_subtypes.sort()
+                    print(current_subtypes)
+                    collection.update({ "type": card_type}, {"$set": {"subtypes": current_subtypes}})
+                    print("Added new subtype to '" + card_type + "' type in DB: " + subtype)
+                    update_count += 1 
     if update_count == 0:
         print("### No updates to card_types DB Collection needed")
         return

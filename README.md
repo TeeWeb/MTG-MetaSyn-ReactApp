@@ -51,15 +51,8 @@ In the future, could add a Decklist Import feature to allow users to upload deck
 From the project's root directory, run:
 - `docker-compose up --build`
 
-This will build and run the three Docker containers: 
-- Nginx (mtg-metasyn_nginx)
+This will build and run the Docker containers: 
 - ReactJS App (mtg-metasyn_app)
 - Flask Server (mtg-metasyn_server)
-## Production Setup
 
-- Create production-ready build for frontend app:
-  - `cd ./app`
-  - `yarn build`
-  - `cd ..`
-- Migrate the 
-  - `docker-compose up --build -d`
+Access the frontend app via your web browser at `localhost:8081`

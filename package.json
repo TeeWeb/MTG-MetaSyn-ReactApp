@@ -1,11 +1,12 @@
 {
-  "name": "mtg-visualizer",
-  "version": "1.0.0",
+  "name": "MTG-MetaSyn",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "cd ./server/flaskr && flask run --host=localhost --no-debugger",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "cd ./server/metasyn_app && flask run --host=localhost --no-debugger",
+    "metasyn_app": "cd ./server && python run.py",
+    "test": "python server/metasyn_app/test_app.py",
     "format": "prettier \"src/**/*.{js, html}\" --write",
     "lint": "eslint \"src/**/*.{js, jsx}\" --quiet",
     "dev": "parcel server/static/index.html",
@@ -25,13 +26,13 @@
     "prettier": "^2.0.2"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "mtgsdk": "^0.4.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-spring": "^8.0.27",
     "react-three-fiber": "^4.0.25",
-    "three": "^0.115.0"
+    "three": "^0.132.2"
   },
   "browserslist": [
     "last 2 Chrome versions",

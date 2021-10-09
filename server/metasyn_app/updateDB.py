@@ -24,7 +24,7 @@ def get_data(url, save_path, chunk_size=128):
         for chunk in r.iter_content(chunk_size=chunk_size):
             f.write(chunk)   
     with zipfile.ZipFile(save_path, 'r') as unzipped:
-        unzipped.extractall('./server/flaskr/data/')
+        unzipped.extractall('./server/metasyn_app/data/')
 
 # db options include: "RawDataDB" and "MetaSynDB"
 def update_db(collection_name):

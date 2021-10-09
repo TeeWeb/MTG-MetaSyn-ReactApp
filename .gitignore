@@ -15,5 +15,5 @@ build/
 *.egg-info/
 venv/
 __pycache__/
-server/flaskr/config.yaml
-server/flaskr/data/*
+server/metasyn_app/config.yaml
+server/metasyn_app/data/*

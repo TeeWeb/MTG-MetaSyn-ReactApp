@@ -8,16 +8,17 @@ def api():
 
 @app.route('/api/sets', methods=['GET'])
 def sets():
-    sets_cursor = db.sets.find({"code": "AMH1"}, {"_id": 0, "code": 1})
+    sets_cursor = db.sets.find({}, {"_id": 0, "code": 1}).sort("code")
     sets = []
     print(next(sets_cursor))
-    # for set in list(sets_cursor):
-    #     sets.append(set['code'])
-    # return jsonify(sets)
+    for set in list(sets_cursor):
+        sets.append(set['code'])
+    return jsonify(sets)
 
 @app.route('/api/keywords', methods=['GET'])
 def keywords():
     keywords_cursor = db.keywords.find({}, {"_id": 0, "keyword": 1}).sort("keyword")
+    print(keywords_cursor)
     keywords = []
     for keyword in list(keywords_cursor):
         keywords.append(keyword['keyword'])

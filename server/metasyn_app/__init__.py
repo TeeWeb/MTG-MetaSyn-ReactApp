@@ -13,7 +13,7 @@ db = client["MetaSynDB"]
 all_cards = db.AllCards
 
 app = Flask(__name__, instance_relative_config=True)
-CORS(app)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config.from_mapping(
     SECRET_KEY='dev',
     DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),

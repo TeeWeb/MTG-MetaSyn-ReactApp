@@ -39,12 +39,12 @@ In the future, could add a Decklist Import feature to allow users to upload deck
 
 ### Server (Flask/Python)
 
-- Change directory to server and setup Python virtual environment: `cd ./server`
+- Change directory to server and setup Python virtual environment: `cd server`
   - On MacOS/Linux:
     - `python3 -m venv venv`
     - `source venv/bin/activate`
   - On Windows:
     - `python -m venv venv`
-    - `source venv/Scripts/activate`
+    - `.\venv\Scripts\activate`
 - Install dependencies: `pip install -r requirements.txt`
 - Start server: `npm run server`

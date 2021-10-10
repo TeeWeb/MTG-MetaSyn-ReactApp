@@ -131,7 +131,6 @@ def handle_keywords_update():
     # TODO: add function to run synergy calculator on new keywords BEFORE they're inserted into database
     update_count = 0
     for keyword in updated_keywords:
-        print(keyword)
         if collection.find({"keyword": keyword}).count() == 0:
             new_keyword = dict(keyword=keyword)
             new_id = collection.insert_one(new_keyword).inserted_id

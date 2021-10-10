@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import KEYWORDS from "../data/Keywords";
-import TYPES from "../data/Types"
 
 import "./SearchParams.css";
 

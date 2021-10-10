@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { render } from "react-dom";
-import { Canvas, extend } from "react-three-fiber";
+import { Canvas } from "react-three-fiber";
 import * as THREE from "three";
 import mtg from "mtgsdk";
 
@@ -41,6 +41,7 @@ const App = () => {
         subtypes: subtype
       })
       .then((res) => {
+        console.log(res)
         return res;
       });
 

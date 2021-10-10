@@ -8,7 +8,7 @@ const origins = {
 };
 
 const isColorless = (colorIdentity) => {
-  if (colorIdentity.length === 0) {
+  if (!colorIdentity) {
     return true;
   } else {
     return false;

@@ -180,7 +180,7 @@ const SearchParams = ({ requestCards }) => {
           </label>
         </div>
         <div className="search-params-terms">
-          <div className="search-params-keywords">
+          <div className="search-params-sets">
             <label htmlFor="search-set" className="search-param">
               Card Set
               <select

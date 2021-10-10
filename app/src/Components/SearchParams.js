@@ -5,13 +5,13 @@ import "./SearchParams.css";
 const SearchParams = ({ requestCards }) => {
   const [keyword, setKeyword] = useState("");
   const [cardType, setCardType] = useState("");
-  const [subtype, setSubtype] = useState("")
+  const [subtype, setSubtype] = useState("");
   const [activeColors, setActiveColors] = useState([]);
   const [colorOperator, setColorOperator] = useState("And/Or");
   const [allCardTypes, setAllCardTypes] = useState([]);
   const [subtypes, setSubtypes] = useState([]);
   const [allCardSets, setAllCardSets] = useState([]);
-  const [allKeywords, setAllKeywords] = useState([])
+  const [allKeywords, setAllKeywords] = useState([]);
   const [cardSet, setCardSet] = useState("");
 
   const getAllCardTypes = () => {
@@ -26,7 +26,7 @@ const SearchParams = ({ requestCards }) => {
         return typesArray;
       });
       return types;
-    })
+    });
   };
 
   const getAllSubtypes = (cardType) => {
@@ -41,7 +41,7 @@ const SearchParams = ({ requestCards }) => {
         return subtypesArray;
       });
       return subtypes;
-    })
+    });
   };
 
   const getAllSets = () => {
@@ -56,7 +56,7 @@ const SearchParams = ({ requestCards }) => {
         return setsArray;
       });
       return sets;
-    })
+    });
   };
 
   const getAllKeywords = () => {
@@ -71,18 +71,19 @@ const SearchParams = ({ requestCards }) => {
         return keywordsArray;
       });
       return keywords;
-    })
+    });
   };
 
   // Use main "Type" selection to determine list of subtypes
   const handleSetCardType = (selection) => {
-    setCardType(selection)
-    getAllSubtypes(selection)
-  }
+    setCardType(selection);
+    getAllSubtypes(selection);
+  };
 
   useEffect(() => {
     getAllKeywords();
     getAllCardTypes();
+    getAllSubtypes();
     getAllSets();
     setActiveColors([]);
   }, [setActiveColors]);
@@ -92,7 +93,14 @@ const SearchParams = ({ requestCards }) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          requestCards(activeColors, colorOperator, cardSet, keyword, cardType, subtype);
+          requestCards(
+            activeColors,
+            colorOperator,
+            cardSet,
+            keyword,
+            cardType,
+            subtype
+          );
         }}
       >
         <div className="search-params-colors">
@@ -237,7 +245,7 @@ const SearchParams = ({ requestCards }) => {
                 id="search-subtype"
                 name="subtype"
                 onChange={(e) => {
-                  setSubtype(e.target.value)
+                  setSubtype(e.target.value);
                 }}
                 onBlur={(e) => setSubtype(e.target.value)}
               >

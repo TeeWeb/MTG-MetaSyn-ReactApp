@@ -40,11 +40,7 @@ In the future, could add a Decklist Import feature to allow users to upload deck
 
 ### Server (Flask/Python)
 
-<<<<<<< HEAD
-- Change directory to server and setup Python virtual environment: `cd server`
-=======
 - Change directory to /server and setup Python virtual environment: `cd ./server`
->>>>>>> Created Dockerfiles and docker-compose file. Updated README file with Docker instructions.
   - On MacOS/Linux:
     - `python3 -m venv venv`
     - `source venv/bin/activate`
@@ -59,8 +55,15 @@ In the future, could add a Decklist Import feature to allow users to upload deck
 From the project's root directory, run:
 - `docker-compose up --build`
 
-This will build and run the Docker containers: 
+This will build and run the three Docker containers: 
+- Nginx (mtg-metasyn_nginx)
 - ReactJS App (mtg-metasyn_app)
 - Flask Server (mtg-metasyn_server)
+## Production Setup
 
-Access the frontend app via your web browser at `localhost:8081`
+- Create production-ready build for frontend app:
+  - `cd ./app`
+  - `yarn build`
+  - `cd ..`
+- Migrate the 
+  - `docker-compose up --build -d`

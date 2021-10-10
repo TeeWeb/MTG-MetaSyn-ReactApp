@@ -9,11 +9,7 @@ server/venv/
 *.pyc
 instance/
 .pytest_cache/
-.coverage
-htmlcov/
 build/
-*.egg-info/
 venv/
 __pycache__/
-server/metasyn_app/config.yaml
-server/metasyn_app/data/*
+server/config.yaml

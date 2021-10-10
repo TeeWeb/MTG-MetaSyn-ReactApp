@@ -30,20 +30,16 @@ const App = () => {
     type,
     subtype
   ) {
-<<<<<<< HEAD
-    console.log("Requesting Cards: ", activeColors, cardSet, keyword, type, subtype);
-=======
->>>>>>> Created Dockerfiles and docker-compose file. Updated README file with Docker instructions.
     const filteredCards = [];
     const cardData = await mtg.card
       .where({
         set: cardSet,
         text: keyword,
         types: type,
-        subtypes: subtype
+        subtypes: subtype,
       })
       .then((res) => {
-        console.log(res)
+        console.log(res);
         return res;
       });
 

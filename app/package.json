@@ -9,10 +9,7 @@
     "lint": "eslint \"./**/*.{js, jsx}\" --quiet",
     "start": "react-scripts start",
     "build": "react-scripts build && rm ./build/serve.json",
-    "prod": "serve -s build",
-    "webpack": "webpack",
     "clean": "rm -r ./build ./dist",
-    "webpack-build": "NODE_ENV=production webpack --watch",
     "stats": "webpack --json build-stats.json"
   },
   "author": "TeeWeb",

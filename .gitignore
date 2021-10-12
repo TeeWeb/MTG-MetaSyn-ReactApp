@@ -12,5 +12,6 @@ instance/
 build/
 venv/
 __pycache__/
-*/config.yaml
+server/config.yaml
+config.yaml
 */build-stats.json

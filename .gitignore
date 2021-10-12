@@ -9,9 +9,8 @@ server/venv/
 *.pyc
 instance/
 .pytest_cache/
-.coverage
-htmlcov/
 build/
-*.egg-info/
 venv/
 __pycache__/
+*/config.yaml
+*/build-stats.json

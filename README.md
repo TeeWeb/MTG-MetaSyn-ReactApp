@@ -12,6 +12,10 @@ When a card is selected by the user, the displayed "orbs" are filtered based upo
 
 The app is built in React and uses ThreeJS to display a 3D space in which the user can navigate through and examine the card results. The "cards" are rendered as orbs located at various points throughout the 3D scene, which will be positioned according to their relationship with each of the other "cards". This will give the user a visual reference for the amount of "synergy" between cards.
 
+## Data Sources
+
+This app uses data provided by the fine folks at Wizards.com and mtgjson.com
+
 ## Future Improvements
 
 - Implement _Color_ filter functionality (currently not working)
@@ -42,7 +46,7 @@ In the future, could add a Decklist Import feature to allow users to upload deck
     - `source venv/bin/activate`
   - On Windows:
     - `python -m venv venv`
-    - `source venv/Scripts/activate`
+    - `.\venv\Scripts\activate`
 - Install dependencies: `pip install -r requirements.txt`
 - Start server: `flask run --host=localhost`
 
@@ -51,8 +55,15 @@ In the future, could add a Decklist Import feature to allow users to upload deck
 From the project's root directory, run:
 - `docker-compose up --build`
 
-This will build and run the Docker containers: 
+This will build and run the three Docker containers: 
+- Nginx (mtg-metasyn_nginx)
 - ReactJS App (mtg-metasyn_app)
 - Flask Server (mtg-metasyn_server)
+## Production Setup
 
-Access the frontend app via your web browser at `localhost:8081`
+- Create production-ready build for frontend app:
+  - `cd ./app`
+  - `yarn build`
+  - `cd ..`
+- Migrate the 
+  - `docker-compose up --build -d`

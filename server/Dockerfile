@@ -3,10 +3,9 @@ FROM python:3.8
 ENV CONTAINER_HOME=/var/www
 
 ADD . ${CONTAINER_HOME}
-WORKDIR ${CONTAINER_HOME}
+WORKDIR ${CONTAINER_HOME}/server
 
 RUN pip install -r ${CONTAINER_HOME}/requirements.txt
-
 RUN export FLASK_APP=run.py
 RUN export FLASK_ENV=production
 

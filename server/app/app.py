@@ -1,9 +1,11 @@
 import requests
 from yaml import load, Loader
+from mtgsdk import Card
 
 from app.synergyCalc import CalculatedSynergy
 
-def data_utils():
+
+def create_app(test_config=None):
 
     def retrieve_all_types():
         print("Downloading MTG types data...")
@@ -61,4 +63,6 @@ def data_utils():
                     merged.append(keyword)
         merged.sort()
         with open('./data/merged_keywords.yaml', 'w') as f:
-            f.write(str(merged)) 
+            f.write(str(merged))
+
+    return

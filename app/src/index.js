@@ -27,15 +27,19 @@ const App = () => {
     colorOperator,
     cardSet,
     keyword,
-    type
+    type,
+    subtype
   ) {
     const filteredCards = [];
     const cardData = await mtg.card
       .where({
         set: cardSet,
-        type: type,
+        text: keyword,
+        types: type,
+        subtypes: subtype,
       })
       .then((res) => {
+        console.log(res);
         return res;
       });
 
@@ -49,7 +53,6 @@ const App = () => {
         filteredCards.push(card);
       }
     });
-
     setCards(filteredCards);
   }
 

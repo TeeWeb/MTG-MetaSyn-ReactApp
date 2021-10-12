@@ -1,6 +1,6 @@
 from flask import request, jsonify
-from metasyn_app import app, db
-from metasyn_app.synergyCalc import CalculatedSynergy
+from app import app, db
+from app.synergyCalc import CalculatedSynergy
 
 
 @app.route('/api', methods=['GET'])
@@ -39,11 +39,15 @@ def types():
 
 @app.route('/api/subtypes', methods=['GET'])
 def subtypes():
-    selected_type = request.args.get('type')
-    subtypes_dict = db.types.find({"type": selected_type}, {
-                                  "_id": 0, "subtypes": 1}).sort("subtypes").next()
-    subtypes = subtypes_dict['subtypes']
-    return jsonify(subtypes)
+    print(request.args.get('type'))
+    if not request.args.get('type') or request.args.get('type') == "undefined":
+        return jsonify(["Select a Type"])
+    else:
+        selected_type = request.args.get('type')
+        subtypes_dict = db.types.find({"type": selected_type}, {
+            "_id": 0, "subtypes": 1}).sort("subtypes").next()
+        subtypes = subtypes_dict['subtypes']
+        return jsonify(subtypes)
 
 
 @app.route('/api/gatherCards', methods=['POST'])

@@ -7,4 +7,4 @@ COPY yarn.lock ./
 COPY . ./
 RUN yarn install --production
 
-CMD npx serve build -l 8080
+CMD npx serve build -l 8081

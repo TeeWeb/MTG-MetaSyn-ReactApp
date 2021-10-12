@@ -2,7 +2,8 @@ import requests
 from yaml import load, Loader
 from mtgsdk import Card
 
-from metasyn_app.synergyCalc import CalculatedSynergy
+from app.synergyCalc import CalculatedSynergy
+
 
 def create_app(test_config=None):
 
@@ -62,6 +63,6 @@ def create_app(test_config=None):
                     merged.append(keyword)
         merged.sort()
         with open('./data/merged_keywords.yaml', 'w') as f:
-            f.write(str(merged)) 
+            f.write(str(merged))
 
     return

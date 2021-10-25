@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import "./SearchParams.css";
 
-const SearchParams = ({ requestCards }) => {
+const SearchParams = ({ ENV_HOST, requestCards }) => {
   const [keyword, setKeyword] = useState("");
   const [cardType, setCardType] = useState("");
   const [subtype, setSubtype] = useState("");
@@ -15,7 +15,7 @@ const SearchParams = ({ requestCards }) => {
   const [cardSet, setCardSet] = useState("");
 
   const getAllCardTypes = () => {
-    fetch("http://localhost:5000/api/types").then((res) => {
+    fetch(ENV_HOST + "/api/types").then((res) => {
       const types = res.json().then((data) => {
         const typesData = data;
         let typesArray = [];
@@ -30,7 +30,7 @@ const SearchParams = ({ requestCards }) => {
   };
 
   const getAllSubtypes = (cardType) => {
-    fetch("http://localhost:5000/api/subtypes?type=" + cardType).then((res) => {
+    fetch(ENV_HOST + "/api/subtypes?type=" + cardType).then((res) => {
       const subtypes = res.json().then((data) => {
         const subtypesData = data;
         let subtypesArray = [];
@@ -45,7 +45,7 @@ const SearchParams = ({ requestCards }) => {
   };
 
   const getAllSets = () => {
-    fetch("http://localhost:5000/api/sets").then((res) => {
+    fetch(ENV_HOST + "/api/sets").then((res) => {
       const sets = res.json().then((data) => {
         const setsData = data;
         let setsArray = [];
@@ -60,7 +60,7 @@ const SearchParams = ({ requestCards }) => {
   };
 
   const getAllKeywords = () => {
-    fetch("http://localhost:5000/api/keywords").then((res) => {
+    fetch(ENV_HOST + "/api/keywords").then((res) => {
       const keywords = res.json().then((data) => {
         const keywordsData = data;
         let keywordsArray = [];

@@ -1,13 +1,13 @@
 {
   "name": "mtg-metasyn",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "scripts": {
     "server": "cd ../server && flask run --host=localhost --no-debugger",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier \"./**/*.{js, html}\" --write",
     "lint": "eslint \"./**/*.{js, jsx}\" --quiet",
-    "start": "react-scripts start",
+    "start": "react-scripts start --mode=development",
     "build": "react-scripts build && rm ./build/serve.json",
     "clean": "rm -r ./build ./dist",
     "stats": "webpack --json build-stats.json"
@@ -20,9 +20,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.14.5",
     "@webpack-cli/serve": "^1.5.2",
-    "babel-loader": "^8.1.0",
     "css-loader": "^6.3.0",
-    "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",

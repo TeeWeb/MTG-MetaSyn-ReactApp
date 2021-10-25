@@ -3,11 +3,11 @@ import SearchParams from "./SearchParams";
 
 import "./GUI.css";
 
-const GUI = ({ handleUpdateCards }) => {
+const GUI = ({ host, handleUpdateCards }) => {
   return (
     <div className="gui">
       <h1>MTG MetaSyn</h1>
-      <SearchParams requestCards={handleUpdateCards()} />
+      <SearchParams ENV_HOST={host} requestCards={handleUpdateCards()} />
     </div>
   );
 };

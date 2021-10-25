@@ -9,6 +9,13 @@ import Plane from "./Components/Plane";
 import GUI from "./Components/GUI";
 import Overlay from "./Components/Overlay";
 
+let API;
+if (process.env.NODE_ENV === "development") {
+  API = "http://localhost:5000";
+} else {
+  API = "http://mtg-metasyn.externull.com";
+}
+
 const App = () => {
   const [cards, setCards] = useState([]);
   const [overlayData, setOverlayData] = useState([]);
@@ -97,7 +104,7 @@ const App = () => {
           <spotLight position={[0, 100, 150]} penumbra={0.15} castShadow />
         </Suspense>
       </Canvas>
-      <GUI handleUpdateCards={() => requestCards} />
+      <GUI host={API} handleUpdateCards={() => requestCards} />
       <Overlay imageUrl={overlayData} />
     </div>
   );

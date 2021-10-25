@@ -11,9 +11,9 @@ import Overlay from "./Components/Overlay";
 
 let API;
 if (process.env.NODE_ENV === "development") {
-  API = "http://localhost:5000";
+  API = "https://localhost:5000";
 } else {
-  API = "http://mtg-metasyn.externull.com";
+  API = "https://mtg-metasyn.externull.com";
 }
 
 const App = () => {

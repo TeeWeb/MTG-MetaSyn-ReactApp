@@ -34,6 +34,14 @@ In the future, could add a Decklist Import feature to allow users to upload deck
 
 _Note: This repo contains only the frontend ReactJS app. Full functionality requires the [Python server](https://github.com/TeeWeb/MTG-MetaSyn-PyServer) to run as the backend service_
 
+## Setting up local SSL cert for development environment
+
+Follow the instructions in [this helpful article](https://www.freecodecamp.org/news/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec/) to create an SSL cert for your local dev environment and enable use of https requests to your local server app instance. For the smoothest experience, use `-keyout server.key` when generating your cert to match the naming convention used in the app's `start` script. Otherwise, update the `start` script to reference your custom key and cert filenames.
+
+Once you've completed these steps, use the `yarn start` command to. [See this article](https://blog.bitsrc.io/using-https-for-local-development-for-react-angular-and-node-fdfaf69693cd) for more information on using self-signed SSL certs during frontend development.
+
+_Note: The same self-signed cert and key used for this local instance of the server will also need to be provided to the backend server to enable full functionality during development._
+
 ### Frontend (ReactJS)
 
 - Change directory to /app and setup frontend app: `cd ./app`

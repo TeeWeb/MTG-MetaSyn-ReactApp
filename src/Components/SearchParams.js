@@ -86,6 +86,7 @@ const SearchParams = ({ ENV_HOST, requestCards }) => {
     getAllSubtypes();
     getAllSets();
     setActiveColors([]);
+    // eslint-disable-next-line
   }, [setActiveColors]);
 
   return (

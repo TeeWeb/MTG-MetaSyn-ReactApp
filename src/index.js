@@ -13,7 +13,7 @@ let API;
 if (process.env.NODE_ENV === "development") {
   API = "https://localhost:5000";
 } else {
-  API = "https://mtg-metasyn.externull.com";
+  API = "https://api.externull.com";
 }
 
 const App = () => {

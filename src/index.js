@@ -94,6 +94,7 @@ const App = () => {
           <fog attach="fog" args={["gray", 250, 400]} />
           <Controls />
           <Plane
+            host={API}
             cards={cards}
             origins={origins}
             handleUpdateOverlayData={(name, imageUrl) =>

@@ -9,7 +9,7 @@ import {
   convertCmcToYValue,
 } from "./Utils";
 
-const Plane = ({ cards, handleUpdateOverlayData }) => {
+const Plane = ({ host, cards, handleUpdateOverlayData }) => {
   const [allCards, setAllCards] = useState(cards);
   const [selectedCard, setSelectedCard] = useState();
   // TODO: Use cardCoordsWithSynergy to relocate orbs based on positions of synergistic cards
@@ -168,7 +168,7 @@ const Plane = ({ cards, handleUpdateOverlayData }) => {
         }
       });
       axios
-        .post("http://localhost:5000/api/synergize?card=" + multiverseId, {
+        .post(host + "/api/synergize?card=" + multiverseId, {
           otherCards: synergizedCards,
         })
         .then(

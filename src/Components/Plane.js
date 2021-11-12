@@ -152,7 +152,7 @@ const Plane = ({ host, cards, handleUpdateOverlayData }) => {
           } else {
             synergizedCards.push({
               id: card.multiverseid,
-              colors: card.colors,
+              colors: card.colors ? card.colors : [],
               manaCost: card.manaCost,
               cmc: card.cmc,
               name: card.name,
@@ -173,6 +173,7 @@ const Plane = ({ host, cards, handleUpdateOverlayData }) => {
         })
         .then(
           (response) => {
+            console.log(response.data);
             return response.data;
           },
           (error) => {

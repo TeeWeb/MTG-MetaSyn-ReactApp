@@ -162,7 +162,7 @@ export const getSynergisticCards = (
     const calcColorSynergies = (colorId, otherCards) => {
       // Check for "synergy" in colors of the cards (colorless synergizes with all any color)
       let colorString;
-      if (colorId.length === 0) {
+      if (!colorId) {
         // Main card is colorless and has color-synergy with all other cards
         otherCards.forEach((card, i, array) => {
           array[i].synergy = 0;
@@ -171,6 +171,9 @@ export const getSynergisticCards = (
         for (let i = 0; i < colorId.length; i++) {
           // eslint-disable-next-line
           otherCards.forEach((card, j, array) => {
+            if (!card.colorIdentity) {
+              card.colorIdentity = [];
+            }
             colorString = card.colorIdentity.join("");
             if (!array[j].synergy) {
               array[j].synergy = 0;
@@ -201,7 +204,7 @@ export const getSynergisticCards = (
     };
 
     const synergisticCards = calcuateSynergy();
-
+    console.log(synergisticCards);
     return synergisticCards;
   }
 };

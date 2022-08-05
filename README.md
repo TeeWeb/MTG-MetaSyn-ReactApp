@@ -44,6 +44,5 @@ _Note: The same self-signed cert and key used for this local instance of the ser
 
 ### Frontend (ReactJS)
 
-- Change directory to /app and setup frontend app: `cd ./app`
 - Install dependencies: `yarn install`
 - Start app: `yarn start`

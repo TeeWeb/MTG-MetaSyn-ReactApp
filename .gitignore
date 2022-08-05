@@ -4,3 +4,4 @@ build/
 build-stats.json
 *.crt
 *.key
+.DS_Store
